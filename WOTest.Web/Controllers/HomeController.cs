@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Schema.NET;
+using WOTest.Core.Interfaces;
 using WOTest.Services.MovieSearch;
 using WOTest.Web.Models;
 
@@ -13,11 +14,11 @@ namespace WOTest.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly OMDBMovieSearchService _searchService;
+        private readonly IMovieSearchService _movieSearchService;
 
-        public HomeController(IConfiguration config)
+        public HomeController(IConfiguration config, IMovieSearchService movieSearchService)
         {
-            _searchService = new OMDBMovieSearchService(config["Settings:APIKey"]);
+            _movieSearchService = movieSearchService;
         }
 
         public IActionResult Index()
@@ -29,7 +30,7 @@ namespace WOTest.Web.Controllers
         {
             if (!string.IsNullOrEmpty(searchModel.SearchText))
             {
-                var searchResults = _searchService.SearchByTitle(searchModel.SearchText).SearchResults;
+                var searchResults = _movieSearchService.SearchByTitle(searchModel.SearchText).SearchResults;
                 searchModel.SearchResults = new List<SearhResultModel>();
                 var schemaList = new ItemList();
                 var movieItemList = new List<IListItem>();
@@ -70,7 +71,7 @@ namespace WOTest.Web.Controllers
 
         public IActionResult MovieDetails(string imdbId)
         {
-            var item = _searchService.SearchByImdbId(imdbId);
+            var item = _movieSearchService.SearchByImdbId(imdbId);
             var movieSchema = new Movie { Name = item.Title,
                                           Genre = item.Genre, Image = new Values<IImageObject, Uri>(new Uri(item.Poster)) };
             
