@@ -5,7 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="OmdbApiNet" Version="1.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="JsonLD\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WOTest.Core\WOTest.Core.csproj" />
   </ItemGroup>
 
 </Project>

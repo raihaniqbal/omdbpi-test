@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Schema.NET;
-using WOTest.Services.ServiceImplementations;
+using WOTest.Services.MovieSearch;
 using WOTest.Web.Models;
 
 namespace WOTest.Web.Controllers
@@ -14,9 +15,9 @@ namespace WOTest.Web.Controllers
     {
         private readonly OMDBMovieSearchService _searchService;
 
-        public HomeController()
+        public HomeController(IConfiguration config)
         {
-            _searchService = new OMDBMovieSearchService("5ad7b62a");
+            _searchService = new OMDBMovieSearchService(config["Settings:APIKey"]);
         }
 
         public IActionResult Index()
