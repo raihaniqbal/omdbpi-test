@@ -1,0 +1,9 @@
+D:\My Stuff\Projects\WOTest\WOTest.Services\bin\Debug\netstandard2.0\WOTest.Services.deps.json
+D:\My Stuff\Projects\WOTest\WOTest.Services\bin\Debug\netstandard2.0\WOTest.Services.dll
+D:\My Stuff\Projects\WOTest\WOTest.Services\obj\Debug\netstandard2.0\WOTest.Services.csprojAssemblyReference.cache
+D:\My Stuff\Projects\WOTest\WOTest.Services\obj\Debug\netstandard2.0\WOTest.Services.csproj.CoreCompileInputs.cache
+D:\My Stuff\Projects\WOTest\WOTest.Services\obj\Debug\netstandard2.0\WOTest.Services.AssemblyInfoInputs.cache
+D:\My Stuff\Projects\WOTest\WOTest.Services\obj\Debug\netstandard2.0\WOTest.Services.AssemblyInfo.cs
+D:\My Stuff\Projects\WOTest\WOTest.Services\bin\Debug\netstandard2.0\WOTest.Services.pdb
+D:\My Stuff\Projects\WOTest\WOTest.Services\obj\Debug\netstandard2.0\WOTest.Services.dll
+D:\My Stuff\Projects\WOTest\WOTest.Services\obj\Debug\netstandard2.0\WOTest.Services.pdb

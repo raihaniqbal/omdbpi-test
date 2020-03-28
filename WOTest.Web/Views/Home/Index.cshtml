@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Movie Search";
+}
+@model SearchModel
+@section JSONLdScripts
+{
+    @if (Model != null)
+    {
+        <script type="application/ld+json">
+
+            @Html.Raw(Model.JsonLdSchema)
+
+        </script>
+    }
+}
+<div class="row">
+    <h1>OMDB Movie Search</h1>
+</div>
+<hr />
+<div class="row">
+    @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "form-inline" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(l => l.SearchText, "Title")
+            @Html.TextBoxFor(t => t.SearchText, new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    }
+</div>
+<hr />
+<div class="row">
+    @if (Model != null && Model.SearchResults != null)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">Search Results</div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>Title</td>
+                            <td>Year</td>
+                            <td>IMDB ID</td>
+                            <td>Type</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var result in Model.SearchResults)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(result.Title, "MovieDetails", new { imdbId =  result.ImdbId })
+                                </td>
+                                <td>
+                                    @result.Year
+                                </td>
+                                <td>
+                                    @result.ImdbId
+                                </td>
+                                <td>
+                                    @result.Type
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = Model.Title;
+}
+@model MovieDetailsModel
+
+@section JSONLdScripts
+    {
+    @if (Model != null)
+    {
+        <script type="application/ld+json">
+
+            @Html.Raw(Model.JsonLdSchema)
+
+        </script>
+    }
+}
+
+<table class="table">
+    <tr>
+        <td>
+            <h2>@Model.Title (@Model.Year)</h2>
+        </td>
+        <td>
+            <span style="font-size: 24px; font-weight: bold">@Model.ImdbRating</span><small>/10</small>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            @Model.ParentalRating | @Model.Runtime | @Model.Genre | @Model.ReleaseDate.ToShortDateString() (@Model.ReleaseCountry)
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            @Model.Plot
+        </td>
+    </tr>
+</table>
+
