@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Schema.NET;
+using WOTest.Core.Extensions;
 using WOTest.Core.Interfaces;
 using WOTest.Services.MovieSearch;
 using WOTest.Web.Models;
@@ -26,19 +27,21 @@ namespace WOTest.Web.Controllers
             return View();
         }
 
-        public IActionResult Search(SearchModel searchModel)
+        public IActionResult Search(string searchText, int? pageNum)
         {
-            if (!string.IsNullOrEmpty(searchModel.SearchText))
+            SearchModel searchModel = new SearchModel();
+
+            if (!string.IsNullOrEmpty(searchText))
             {
-                var searchResults = _movieSearchService.SearchByTitle(searchModel.SearchText).SearchResults;
-                searchModel.SearchResults = new List<SearhResultModel>();
+                var searchResults = _movieSearchService.SearchByTitle(searchText).SearchResults;
+                var searchResultList = new List<SearchResultModel>();
                 var schemaList = new ItemList();
                 var movieItemList = new List<IListItem>();
                 int position = 1;
 
                 foreach (var result in searchResults)
                 {
-                    searchModel.SearchResults.Add(new SearhResultModel
+                    searchResultList.Add(new SearchResultModel
                     {
                         Title = result.Title,
                         ImdbId = result.ImdbId,
@@ -62,6 +65,10 @@ namespace WOTest.Web.Controllers
                     });
                 }
 
+                int pageSize = 5;
+
+                searchModel.SearchText = searchText;
+                searchModel.SearchResults = PaginatedList<SearchResultModel>.Create(searchResultList.AsQueryable(), pageNum ?? 1, pageSize);
                 schemaList.ItemListElement = new Values<IListItem, string, IThing>(movieItemList);
                 searchModel.JsonLdSchema = schemaList.ToHtmlEscapedString();
             }
