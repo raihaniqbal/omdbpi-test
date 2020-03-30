@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WOTest.Core.Extensions;
 
 namespace WOTest.Web.Models
 {
     public class SearchModel
     {
         public string SearchText { get; set; }
-        public List<SearhResultModel> SearchResults { get; set; }
+        public PaginatedList<SearchResultModel> SearchResults { get; set; }
         public string JsonLdSchema { get; set; }
 
         public SearchModel()
         {
-            
         }
     }
 
-    public class SearhResultModel
+    public class SearchResultModel
     {
         public string Title { get; set; }
         public string Year { get; set; }
