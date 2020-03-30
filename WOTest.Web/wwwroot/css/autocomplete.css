@@ -1,0 +1,14 @@
+﻿div.autocomplete-container {
+    width: 100%;
+}
+
+    div.autocomplete-container > div.suggestions {
+        width: 100%;
+        border: 1px solid black;
+    }
+
+div.suggestions > li {
+    line-height: 31px;
+    list-style: none;
+    padding-left: 5px;
+}

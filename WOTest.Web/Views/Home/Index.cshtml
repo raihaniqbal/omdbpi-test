@@ -67,6 +67,8 @@
                     var prevDisabled = !Model.SearchResults.HasPreviousPage ? "disabled" : "";
                     var nextDisabled = !Model.SearchResults.HasNextPage ? "disabled" : "";
                 }
+                Page @Model.SearchResults.PageIndex of @Model.SearchResults.TotalPages
+                <br/>
                 <nav aria-label="...">
                     <ul class="pagination">
                         <li>

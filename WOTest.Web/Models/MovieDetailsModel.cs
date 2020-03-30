@@ -16,7 +16,7 @@ namespace WOTest.Web.Models
         public string ImdbRating { get; set; }
         public string ParentalRating { get; set; }
         public string Runtime { get; set; }
-        public DateTime ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; }
         public string ReleaseCountry { get; set; }
         public string JsonLdSchema { get; set; }
     }

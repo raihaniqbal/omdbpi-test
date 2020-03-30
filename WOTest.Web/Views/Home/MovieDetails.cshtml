@@ -4,6 +4,11 @@
 }
 @model MovieDetailsModel
 
+@section CustomStyles
+{
+    <link rel="stylesheet" href="~/css/autocomplete.css" />
+}
+
 @section JSONLdScripts
     {
     @if (Model != null)
@@ -27,7 +32,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            @Model.ParentalRating | @Model.Runtime | @Model.Genre | @Model.ReleaseDate.ToShortDateString() (@Model.ReleaseCountry)
+            @Model.ParentalRating | @Model.Runtime | @Model.Genre | @Model.ReleaseDate (@Model.ReleaseCountry)
         </td>
     </tr>
     <tr>
@@ -36,4 +41,15 @@
         </td>
     </tr>
 </table>
-
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-2">
+            Look-up another movie:
+        </div>
+        <div class="col-md-10">
+            <div class="movie-autocomplete"></div>
+            @*<input type="text" class="form-control" />*@
+        </div>
+    </div>
+</div>

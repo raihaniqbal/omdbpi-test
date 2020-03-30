@@ -33,7 +33,8 @@ namespace WOTest.Web.Controllers
 
             if (!string.IsNullOrEmpty(searchText))
             {
-                var searchResults = _movieSearchService.SearchByTitle(searchText).SearchResults;
+                var response = _movieSearchService.SearchByTitle(searchText, pageNum);
+                var searchResults = response.SearchResults;
                 var searchResultList = new List<SearchResultModel>();
                 var schemaList = new ItemList();
                 var movieItemList = new List<IListItem>();
@@ -59,16 +60,16 @@ namespace WOTest.Web.Controllers
                         {
                             Id = new Uri(movieDetailsUrl),
                             Name = result.Title,
-                            Image = new Values<IImageObject, Uri>(new Uri(result.Poster)),
-                            Url = new Uri(movieDetailsUrl)
+                            Url = new Uri(movieDetailsUrl),
+                            Image = new Values<IImageObject, Uri>(result.Poster.ToUri())
                         }
                     });
                 }
 
-                int pageSize = 5;
+                int pageSize = 10;
 
                 searchModel.SearchText = searchText;
-                searchModel.SearchResults = PaginatedList<SearchResultModel>.Create(searchResultList.AsQueryable(), pageNum ?? 1, pageSize);
+                searchModel.SearchResults = new PaginatedList<SearchResultModel>(searchResultList, response.TotalResults, pageNum ?? 1, pageSize);
                 schemaList.ItemListElement = new Values<IListItem, string, IThing>(movieItemList);
                 searchModel.JsonLdSchema = schemaList.ToHtmlEscapedString();
             }
@@ -76,11 +77,16 @@ namespace WOTest.Web.Controllers
             return View("Index", searchModel);
         }
 
+        public IActionResult QuickSearch(string searchText)
+        {
+            return Json(_movieSearchService.SearchByTitle(searchText, null));
+        }
+
         public IActionResult MovieDetails(string imdbId)
         {
             var item = _movieSearchService.SearchByImdbId(imdbId);
             var movieSchema = new Movie { Name = item.Title,
-                                          Genre = item.Genre, Image = new Values<IImageObject, Uri>(new Uri(item.Poster)) };
+                                          Genre = item.Genre, Image = new Values<IImageObject, Uri>(item.Poster.ToUri()) };
             
             return View(new MovieDetailsModel
             {
@@ -93,7 +99,7 @@ namespace WOTest.Web.Controllers
                 ParentalRating = item.Rated,
                 ImdbRating = item.ImdbRating,
                 Runtime = item.Runtime,
-                ReleaseDate = DateTime.Parse(item.Released),
+                ReleaseDate = item.Released,
                 ReleaseCountry = item.Country,
                 JsonLdSchema = movieSchema.ToHtmlEscapedString()
             });

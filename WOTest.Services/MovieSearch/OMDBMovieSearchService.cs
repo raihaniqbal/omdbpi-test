@@ -25,11 +25,18 @@ namespace WOTest.Services.MovieSearch
             return Mapping.Mapper.Map<MovieDetailDto>(item);
         }
 
-        public MovieSearchResultDto SearchByTitle(string query)
+        public MovieSearchResultDto SearchByTitle(string query, int? page)
         {
-            var result = _apiClient.GetSearchList(query);
+            try
+            {
+                var result = _apiClient.GetSearchList(query, page ?? 1);
 
-            return Mapping.Mapper.Map<MovieSearchResultDto>(result);
+                return Mapping.Mapper.Map<MovieSearchResultDto>(result);
+            }
+            catch(Exception ex)
+            {
+                return new MovieSearchResultDto { Error = ex.Message };
+            }
         }
     }
 }
