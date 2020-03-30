@@ -3,7 +3,7 @@
 }
 @model SearchModel
 @section JSONLdScripts
-    {
+{
     @if (Model != null)
     {
         <script type="application/ld+json">
@@ -48,7 +48,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.ActionLink(result.Title, "MovieDetails", new { imdbId = result.ImdbId })
+                                    @Html.ActionLink(result.Title, "MovieDetails", new { imdbId =  result.ImdbId })
                                 </td>
                                 <td>
                                     @result.Year
@@ -63,30 +63,6 @@
                         }
                     </tbody>
                 </table>
-                @{
-                    var prevDisabled = !Model.SearchResults.HasPreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.SearchResults.HasNextPage ? "disabled" : "";
-                }
-                <nav aria-label="...">
-                    <ul class="pagination">
-                        <li>
-                            <a asp-action="Search"
-                               asp-route-searchText="@(Model.SearchText)"
-                               asp-route-pageNum="@(Model.SearchResults.PageIndex - 1)"
-                               class="btn btn-default @prevDisabled">
-                                Previous
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-action="Search"
-                               asp-route-searchText="@(Model.SearchText)"
-                               asp-route-pageNum="@(Model.SearchResults.PageIndex + 1)"
-                               class="btn btn-default @nextDisabled">
-                                Next
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
     }
